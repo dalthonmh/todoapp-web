@@ -1,14 +1,14 @@
 import axios from 'axios'
 
-const API = 'http://localhost:8080'
+import { API_AUTH_URL } from '../config'
 
 export const login = async (credentials) => {
-  const res = await axios.post(`${API}/login`, credentials)
+  const res = await axios.post(`${API_AUTH_URL}/login`, credentials)
   localStorage.setItem('token', res.data.token)
 }
 
 export const register = async (credentials) => {
-  return axios.post(`${API}/register`, credentials)
+  return axios.post(`${API_AUTH_URL}/register`, credentials)
 }
 
 export const logout = () => {
