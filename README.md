@@ -2,19 +2,14 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
 ## Project Setup
 
 ```sh
 yarn install
 ```
+### Actualizamos las variables de entorno en .env especificando el dominio endpoint
+VITE_API_AUTH_URL=http://localhost:8081
+VITE_API_CORE_URL=http://localhost:3000
 
 ### Compile and Hot-Reload for Development
 
