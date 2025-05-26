@@ -3,6 +3,9 @@ FROM node:18 AS build
 WORKDIR /app
 COPY . .
 
+ENV VITE_API_AUTH_URL=http://localhost:8080
+ENV VITE_API_CORE_URL=http://localhost:3000
+
 RUN yarn install && yarn build
 
 # Etapa de producción
