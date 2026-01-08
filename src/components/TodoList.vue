@@ -15,7 +15,10 @@
       <button type="submit" style="padding: 0.5rem 1rem">Add</button>
     </form>
 
-    <ul style="list-style: none; padding: 0">
+    <div v-if="todos.length === 0" style="text-align: center; color: gray; margin: 1rem 0">
+      No tasks assigned
+    </div>
+    <ul v-else style="list-style: none; padding: 0">
       <li
         v-for="todo in todos"
         :key="todo._id"
@@ -32,14 +35,27 @@
             {{ todo.title }} ({{ todo.username }})
           </span>
         </div>
-        <button @click="remove(todo._id)" style="color: red; border: none; background: none">
-          🗑️
+        <button
+          @click="remove(todo._id)"
+          style="background: none; color: gray; border: 1px solid #ccc; border-radius: 4px"
+        >
+          delete
         </button>
       </li>
     </ul>
 
     <div style="text-align: center; margin-top: 1rem">
-      <button @click="logoutAndGo" style="font-size: 0.9rem">Cerrar sesión</button>
+      <button
+        @click="logoutAndGo"
+        style="
+          font-size: 0.9rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          padding: 0.3rem 0.8rem;
+        "
+      >
+        Logout
+      </button>
     </div>
   </div>
 </template>
@@ -74,7 +90,7 @@ const add = async () => {
 }
 
 const remove = async (id) => {
-  await deleteTodo(id)
+  confirm('Are you sure to delete this task?') && (await deleteTodo(id))
   fetchTodos()
 }
 

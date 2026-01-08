@@ -1,4 +1,4 @@
-name: ToDo-APP web
+name: ToDo-APP Web
 
 on:
   push:
