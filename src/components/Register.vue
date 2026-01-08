@@ -8,22 +8,22 @@
       border-radius: 8px;
     "
   >
-    <h2 style="text-align: center">📝 Registrarse</h2>
+    <h2 style="text-align: center">Register</h2>
 
     <form @submit.prevent="submit" style="display: flex; flex-direction: column; gap: 0.5rem">
-      <input v-model="username" placeholder="Usuario" required style="padding: 0.5rem" />
+      <input v-model="username" placeholder="Username" required style="padding: 0.5rem" />
       <input
         v-model="password"
         type="password"
-        placeholder="Contraseña"
+        placeholder="Password"
         required
         style="padding: 0.5rem"
       />
-      <button type="submit" style="padding: 0.5rem">Registrarse</button>
+      <button type="submit" style="padding: 0.5rem">Register</button>
     </form>
 
     <div style="text-align: center; margin-top: 1rem">
-      <router-link to="/login">¿Ya tienes cuenta? Inicia sesión</router-link>
+      <router-link to="/login">Already have an account? Log In</router-link>
     </div>
   </div>
 </template>

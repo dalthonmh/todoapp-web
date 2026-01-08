@@ -8,11 +8,11 @@
       border-radius: 8px;
     "
   >
-    <h2 style="text-align: center">📋 Tus tareas</h2>
+    <h2 style="text-align: center">Tasks</h2>
 
     <form @submit.prevent="add" style="display: flex; gap: 0.5rem; margin-bottom: 1rem">
-      <input v-model="title" placeholder="Nueva tarea" style="flex: 1; padding: 0.5rem" />
-      <button type="submit" style="padding: 0.5rem 1rem">Agregar</button>
+      <input v-model="title" placeholder="New task" style="flex: 1; padding: 0.5rem" />
+      <button type="submit" style="padding: 0.5rem 1rem">Add</button>
     </form>
 
     <ul style="list-style: none; padding: 0">
@@ -33,7 +33,7 @@
           </span>
         </div>
         <button @click="remove(todo._id)" style="color: red; border: none; background: none">
-          ❌
+          🗑️
         </button>
       </li>
     </ul>
@@ -56,7 +56,7 @@ const router = useRouter()
 
 const token = localStorage.getItem('token') || sessionStorage.getItem('token')
 
-// Redirigir si no hay token
+// Redirect to login if not authenticated
 if (!token) {
   router.push('/login')
 }

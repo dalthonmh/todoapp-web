@@ -6,7 +6,7 @@ import TodoList from '../components/TodoList.vue'
 const routes = [
   { path: '/', component: TodoList },
   { path: '/login', component: Login },
-  { path: '/registro', component: Register },
+  { path: '/register', component: Register },
 ]
 
 const router = createRouter({

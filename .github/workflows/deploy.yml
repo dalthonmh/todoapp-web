@@ -1,0 +1,55 @@
+name: ToDo-APP web
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.DCKR_PAT }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: dalthonmh/todoapp-web
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=sha
+
+      - name: Determine Environment URLs
+        id: env-vars
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]] || [[ "${{ github.ref }}" == "refs/tags/"* ]]; then
+            echo "VITE_API_AUTH_URL=https://dalthonmh.space" >> $GITHUB_OUTPUT
+            echo "VITE_API_CORE_URL=https://dalthonmh.space" >> $GITHUB_OUTPUT
+          else
+            echo "VITE_API_AUTH_URL=http://todoapp.test" >> $GITHUB_OUTPUT
+            echo "VITE_API_CORE_URL=http://todoapp.test" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            VITE_API_AUTH_URL=${{ steps.env-vars.outputs.VITE_API_AUTH_URL }}
+            VITE_API_CORE_URL=${{ steps.env-vars.outputs.VITE_API_CORE_URL }}

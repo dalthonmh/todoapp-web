@@ -1,12 +1,18 @@
-FROM node:24-alpine
+# Build stage
+FROM node:24-alpine AS build
 WORKDIR /app
-COPY package*.json yarn.lock* ./
-RUN yarn install
 COPY . .
 
-ARG VITE_API_AUTH_URL=https://todoapp.test
-ARG VITE_API_CORE_URL=https://todoapp.test
+# Define build arguments
+ARG VITE_API_AUTH_URL
+ARG VITE_API_CORE_URL
 
-EXPOSE 5173
+# Install dependencies and build
+RUN yarn install && yarn build
 
-CMD ["yarn", "dev", "--host"]
+# Nginx serve
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
