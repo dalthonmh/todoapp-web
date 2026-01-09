@@ -11,7 +11,13 @@
     <h2 style="text-align: center">Register</h2>
 
     <form @submit.prevent="submit" style="display: flex; flex-direction: column; gap: 0.5rem">
-      <input v-model="username" placeholder="Username" required style="padding: 0.5rem" />
+      <input
+        v-model="username"
+        placeholder="Username"
+        ref="usernameRef"
+        required
+        style="padding: 0.5rem"
+      />
       <input
         v-model="password"
         type="password"
@@ -32,10 +38,16 @@
 import { ref } from 'vue'
 import { register } from '../services/authService'
 import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
 
 const username = ref('')
 const password = ref('')
 const router = useRouter()
+const usernameRef = ref(null)
+
+onMounted(() => {
+  usernameRef.value.focus()
+})
 
 const submit = async () => {
   try {

@@ -11,7 +11,12 @@
     <h2 style="text-align: center">Tasks</h2>
 
     <form @submit.prevent="add" style="display: flex; gap: 0.5rem; margin-bottom: 1rem">
-      <input v-model="title" placeholder="New task" style="flex: 1; padding: 0.5rem" />
+      <input
+        v-model="title"
+        placeholder="New task"
+        ref="taskRef"
+        style="flex: 1; padding: 0.5rem"
+      />
       <button type="submit" style="padding: 0.5rem 1rem">Add</button>
     </form>
 
@@ -69,6 +74,11 @@ import { useRouter } from 'vue-router'
 const todos = ref([])
 const title = ref('')
 const router = useRouter()
+const taskRef = ref(null)
+
+onMounted(() => {
+  taskRef.value.focus()
+})
 
 const token = localStorage.getItem('token') || sessionStorage.getItem('token')
 
