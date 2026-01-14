@@ -11,6 +11,7 @@ A modern web frontend for the TodoApp, built with [Vue 3](https://vuejs.org/) an
 ## Project Setup
 
 1. **Install Dependencies**
+
    ```sh
    yarn install
    ```
@@ -47,9 +48,10 @@ Ensure your `.env` file is set up, then run:
 ```sh
 docker compose up -d --build
 ```
+
 The app will be accessible at `http://localhost`.
 
-### 2. Manual Docker Build
+### 2. Manual Docker Build in dev mode
 
 You can also build the image directly, passing the environment variables as build arguments:
 
@@ -61,6 +63,22 @@ docker build \
 ```
 
 Run the container:
+
 ```sh
 docker run -p 80:80 dalthonmh/todoapp-web
+```
+
+### 3. Docker build to Stage (AWS EC2)
+
+Add an .env.production file with empty values ​​so that it becomes a relative path and accepts the IP address of ec2:
+
+```sh
+VITE_API_AUTH_URL=
+VITE_API_CORE_URL=
+```
+
+Then build and by default it will use the production mode
+
+```sh
+docker build -t dalthonmh/todoapp-web:stage . --push
 ```
