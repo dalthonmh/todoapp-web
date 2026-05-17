@@ -31,17 +31,6 @@ jobs:
             type=semver,pattern={{version}}
             type=sha
 
-      - name: Determine Environment URLs
-        id: env-vars
-        run: |
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]] || [[ "${{ github.ref }}" == "refs/tags/"* ]]; then
-            echo "VITE_API_AUTH_URL=https://dalthonmh.space" >> $GITHUB_OUTPUT
-            echo "VITE_API_CORE_URL=https://dalthonmh.space" >> $GITHUB_OUTPUT
-          else
-            echo "VITE_API_AUTH_URL=http://todoapp.test" >> $GITHUB_OUTPUT
-            echo "VITE_API_CORE_URL=http://todoapp.test" >> $GITHUB_OUTPUT
-          fi
-
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -50,6 +39,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            VITE_API_AUTH_URL=${{ steps.env-vars.outputs.VITE_API_AUTH_URL }}
-            VITE_API_CORE_URL=${{ steps.env-vars.outputs.VITE_API_CORE_URL }}
