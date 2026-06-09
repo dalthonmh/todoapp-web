@@ -26,7 +26,7 @@
     <ul v-else style="list-style: none; padding: 0">
       <li
         v-for="todo in todos"
-        :key="todo._id"
+        :key="todo.id"
         style="
           display: flex;
           align-items: center;
@@ -41,7 +41,7 @@
           </span>
         </div>
         <button
-          @click="remove(todo._id)"
+          @click="remove(todo.id)"
           style="background: none; color: gray; border: 1px solid #ccc; border-radius: 4px"
         >
           delete
@@ -105,7 +105,7 @@ const remove = async (id) => {
 }
 
 const toggleComplete = async (todo) => {
-  await updateTodo(todo._id, {
+  await updateTodo(todo.id, {
     completed: !todo.completed,
     title: todo.title,
   })
